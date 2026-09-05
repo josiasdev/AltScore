@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuthStore } from '../stores/authStore';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
+import { Button } from '../components/ui/Button';
 import { Spinner } from '../components/ui/Spinner';
 
 interface FundStatus {
@@ -37,6 +40,7 @@ interface FundRules {
 }
 
 export function GuaranteeFund() {
+  const { isAuthenticated } = useAuthStore();
   const [status, setStatus] = useState<FundStatus | null>(null);
   const [history, setHistory] = useState<FundHistory[]>([]);
   const [rules, setRules] = useState<FundRules | null>(null);
@@ -44,8 +48,12 @@ export function GuaranteeFund() {
   const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'rules'>('overview');
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (isAuthenticated) {
+      loadData();
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated]);
 
   const loadData = async () => {
     try {
@@ -79,6 +87,74 @@ export function GuaranteeFund() {
     });
   };
 
+  // Usuário não logado - mostrar apenas CTA
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-petrol-50 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-heading font-bold text-petrol mb-4">Fundo Garantidor</h1>
+            <p className="text-xl text-petrol-400 mb-8">
+              Smart contract na blockchain Solana para cobertura de inadimplência
+            </p>
+          </div>
+
+          <Card className="mb-8">
+            <div className="text-center py-8">
+              <div className="text-5xl mb-4">🔒</div>
+              <h2 className="text-2xl font-heading font-bold text-petrol mb-4">
+                Acesse o Fundo Garantidor
+              </h2>
+              <p className="text-petrol-400 mb-6 max-w-md mx-auto">
+                Para visualizar os dados do fundo, fazer depósitos ou reivindicar coberturas,
+                faça login ou crie sua conta.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/login">
+                  <Button size="lg">Fazer Login</Button>
+                </Link>
+                <Link to="/cadastro">
+                  <Button variant="outline" size="lg">Criar Conta</Button>
+                </Link>
+              </div>
+            </div>
+          </Card>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card>
+              <div className="text-center">
+                <div className="text-3xl mb-3">🛡️</div>
+                <h3 className="font-heading font-semibold mb-2 text-petrol">Proteção</h3>
+                <p className="text-sm text-petrol-400">
+                  Cobertura contra inadimplência para proprietários
+                </p>
+              </div>
+            </Card>
+            <Card>
+              <div className="text-center">
+                <div className="text-3xl mb-3">⛓️</div>
+                <h3 className="font-heading font-semibold mb-2 text-petrol">Blockchain</h3>
+                <p className="text-sm text-petrol-400">
+                  Todas as transações são auditáveis na Solana
+                </p>
+              </div>
+            </Card>
+            <Card>
+              <div className="text-center">
+                <div className="text-3xl mb-3">⚡</div>
+                <h3 className="font-heading font-semibold mb-2 text-petrol">Automático</h3>
+                <p className="text-sm text-petrol-400">
+                  Smart contract executa regras sem intermediários
+                </p>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Usuário logado - mostrar dados completos
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-petrol-50">
