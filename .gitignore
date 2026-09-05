@@ -3,6 +3,7 @@ node_modules/
 __pycache__/
 *.pyc
 .env
+backend/venv/
 
 # Build
 dist/
@@ -26,3 +27,9 @@ frontend/dist/
 
 # Solana
 solana-program/target/
+
+# Original files (not part of app)
+*.docx
+*.pdf
+WhatsApp*.jpeg
+logo_principal.jpg
