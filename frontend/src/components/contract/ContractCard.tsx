@@ -13,7 +13,8 @@ export function ContractCard({ contract }: ContractCardProps) {
     cancelled: { label: 'Cancelado', variant: 'default' as const },
   };
 
-  const { label, variant } = statusConfig[contract.status];
+  const config = statusConfig[contract.status] || { label: contract.status, variant: 'default' as const };
+  const { label, variant } = config;
 
   return (
     <div className="bg-white rounded-xl border border-petrol-100 p-4 shadow-sm">

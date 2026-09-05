@@ -4,6 +4,8 @@ import { api } from '../lib/api';
 import { useAuthStore } from '../stores/authStore';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
+import { Spinner } from '../components/ui/Spinner';
+import { ErrorBanner } from '../components/ui/ErrorBanner';
 import type { Property } from '../types';
 
 export function PropertyDetail() {
@@ -12,23 +14,26 @@ export function PropertyDetail() {
   const { isAuthenticated } = useAuthStore();
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [requesting, setRequesting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    loadProperty();
-  }, [id]);
-
   const loadProperty = async () => {
+    setLoading(true);
+    setError('');
     try {
       const res = await api.properties.get(Number(id));
       setProperty(res);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      setError(err.message || 'Erro ao carregar imóvel');
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadProperty();
+  }, [id]);
 
   const handleRequestContract = async () => {
     if (!isAuthenticated) {
@@ -41,7 +46,7 @@ export function PropertyDetail() {
       await api.contracts.create({ property_id: Number(id) });
       setSuccess(true);
     } catch (err: any) {
-      alert(err.message || 'Erro ao solicitar contrato');
+      setError(err.message || 'Erro ao solicitar contrato');
     } finally {
       setRequesting(false);
     }
@@ -49,16 +54,22 @@ export function PropertyDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-petrol-400">Carregando...</p>
+      <div className="min-h-screen flex items-center justify-center bg-petrol-50">
+        <Spinner size="lg" />
       </div>
     );
   }
 
   if (!property) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-petrol-400">Imóvel não encontrado</p>
+      <div className="min-h-screen flex items-center justify-center bg-petrol-50">
+        <div className="text-center">
+          <div className="text-5xl mb-4">🏚️</div>
+          <h2 className="font-heading font-semibold text-petrol mb-2">Imóvel não encontrado</h2>
+          <Button variant="ghost" onClick={() => navigate('/imoveis')}>
+            ← Voltar para imóveis
+          </Button>
+        </div>
       </div>
     );
   }
@@ -72,6 +83,8 @@ export function PropertyDetail() {
         >
           ← Voltar
         </button>
+
+        {error && <ErrorBanner message={error} onRetry={() => setError('')} />}
 
         <div className="bg-white rounded-xl overflow-hidden shadow-sm">
           <div className="h-64 bg-petrol-50">

@@ -6,6 +6,8 @@ import { ScoreDisplay } from '../components/score/ScoreDisplay';
 import { PropertyCard } from '../components/property/PropertyCard';
 import { Card } from '../components/ui/Card';
 import { Avatar } from '../components/ui/Avatar';
+import { Spinner } from '../components/ui/Spinner';
+import { ErrorBanner } from '../components/ui/ErrorBanner';
 import type { Property, Score } from '../types';
 
 export function Dashboard() {
@@ -14,35 +16,37 @@ export function Dashboard() {
   const [score, setScore] = useState<Score | null>(null);
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const loadData = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const [scoreRes, propertiesRes] = await Promise.all([
+        api.score.get().catch(() => null),
+        api.properties.list(),
+      ]);
+      if (scoreRes) setScore(scoreRes);
+      setProperties(propertiesRes.slice(0, 3));
+    } catch (err: any) {
+      setError(err.message || 'Erro ao carregar dados');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/auth');
       return;
     }
-
-    const loadData = async () => {
-      try {
-        const [scoreRes, propertiesRes] = await Promise.all([
-          api.score.get().catch(() => null),
-          api.properties.list(),
-        ]);
-        if (scoreRes) setScore(scoreRes);
-        setProperties(propertiesRes.slice(0, 3));
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadData();
   }, [isAuthenticated, navigate]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-petrol-400">Carregando...</p>
+      <div className="min-h-screen flex items-center justify-center bg-petrol-50">
+        <Spinner size="lg" />
       </div>
     );
   }
@@ -62,14 +66,16 @@ export function Dashboard() {
           </div>
         </div>
 
+        {error && <ErrorBanner message={error} onRetry={loadData} />}
+
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
-          {/* Score */}
           <Card className="lg:col-span-1">
             <h2 className="font-heading font-semibold mb-4">Seu Score</h2>
             {score ? (
               <ScoreDisplay score={score.total} level={score.level} showDetails />
             ) : (
               <div className="text-center py-8">
+                <div className="text-4xl mb-3">📊</div>
                 <p className="text-petrol-400 mb-4">Você ainda não tem um score</p>
                 <button
                   onClick={async () => {
@@ -84,7 +90,6 @@ export function Dashboard() {
             )}
           </Card>
 
-          {/* Quick stats */}
           <Card className="lg:col-span-2">
             <h2 className="font-heading font-semibold mb-4">Resumo</h2>
             <div className="grid grid-cols-2 gap-4">
@@ -102,7 +107,6 @@ export function Dashboard() {
           </Card>
         </div>
 
-        {/* Properties */}
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-heading font-semibold text-xl text-petrol">Imóveis recomendados</h2>
@@ -113,11 +117,20 @@ export function Dashboard() {
               Ver todos
             </button>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {properties.map((p) => (
-              <PropertyCard key={p.id} property={p} onClick={() => navigate(`/imoveis/${p.id}`)} />
-            ))}
-          </div>
+          {properties.length === 0 ? (
+            <Card>
+              <div className="text-center py-8">
+                <div className="text-4xl mb-3">🏠</div>
+                <p className="text-petrol-400">Nenhum imóvel disponível no momento</p>
+              </div>
+            </Card>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {properties.map((p) => (
+                <PropertyCard key={p.id} property={p} onClick={() => navigate(`/imoveis/${p.id}`)} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-export function Button({ variant = 'primary', size = 'md', fullWidth, className, children, ...props }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'md', fullWidth, className, disabled, children, ...props }: ButtonProps) {
   const base = 'inline-flex items-center justify-center font-heading font-medium transition-colors';
 
   const variants = {
@@ -24,7 +24,8 @@ export function Button({ variant = 'primary', size = 'md', fullWidth, className,
 
   return (
     <button
-      className={`${base} ${variants[variant]} ${sizes[size]} ${fullWidth ? 'w-full' : ''} ${className || ''}`}
+      className={`${base} ${variants[variant]} ${sizes[size]} ${fullWidth ? 'w-full' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className || ''}`}
+      disabled={disabled}
       {...props}
     >
       {children}

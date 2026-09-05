@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
@@ -9,8 +10,15 @@ import { Properties } from './pages/Properties';
 import { PropertyDetail } from './pages/PropertyDetail';
 import { Contracts } from './pages/Contracts';
 import { LandlordDashboard } from './pages/LandlordDashboard';
+import { useAuthStore } from './stores/authStore';
 
 function App() {
+  const hydrate = useAuthStore((s) => s.hydrate);
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen">
