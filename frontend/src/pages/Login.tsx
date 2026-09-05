@@ -35,20 +35,41 @@ export function Login() {
     setError('');
 
     try {
-      if (!(window as any).solana?.isPhantom) {
-        setError('Phantom Wallet não encontrada. Instale a extensão.');
-        setWalletLoading(false);
-        return;
+      // Verificar se a Phantom está disponível de várias formas
+      const solana = (window as any).solana;
+      const isPhantom = solana?.isPhantom || (window as any).phantom?.solana?.isPhantom;
+
+      if (!isPhantom) {
+        // Tentar detectar após um breve delay (extensões podem demorar)
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const solanaRetry = (window as any).solana;
+        const isPhantomRetry = solanaRetry?.isPhantom || (window as any).phantom?.solana?.isPhantom;
+        
+        if (!isPhantomRetry) {
+          setError('Phantom Wallet não detectada. Verifique se a extensão está ativa e recarregue a página.');
+          setWalletLoading(false);
+          return;
+        }
       }
 
-      const resp = await (window as any).solana.connect();
-      const publicKey = resp.publicKey.toString();
+      // Usar a referência correta da Phantom
+      const phantom = (window as any).phantom?.solana || (window as any).solana;
+      
+      if (!phantom.isConnected) {
+        await phantom.connect();
+      }
 
+      const publicKey = phantom.publicKey.toString();
       const res = await api.auth.loginWithWallet(publicKey);
       setAuth(res.user, res.access_token);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.message || 'Erro ao conectar com Phantom');
+      if (err.code === 4001) {
+        setError('Conexão rejeitada pelo usuário. Abra a Phantom e autorize.');
+      } else {
+        setError(err.message || 'Erro ao conectar com Phantom');
+      }
     } finally {
       setWalletLoading(false);
     }
