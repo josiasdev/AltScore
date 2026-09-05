@@ -13,7 +13,7 @@ export function Contracts() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/auth');
+      navigate('/login');
       return;
     }
     loadContracts();
@@ -32,7 +32,7 @@ export function Contracts() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-petrol-50">
         <p className="text-petrol-400">Carregando...</p>
       </div>
     );
@@ -45,6 +45,7 @@ export function Contracts() {
 
         {contracts.length === 0 ? (
           <div className="text-center py-12">
+            <div className="text-5xl mb-4">📄</div>
             <p className="text-petrol-400 mb-4">Você ainda não tem contratos</p>
             <button
               onClick={() => navigate('/imoveis')}
@@ -56,7 +57,13 @@ export function Contracts() {
         ) : (
           <div className="space-y-4">
             {contracts.map((contract) => (
-              <ContractCard key={contract.id} contract={contract} />
+              <div
+                key={contract.id}
+                onClick={() => navigate(`/contratos/${contract.id}`)}
+                className="cursor-pointer"
+              >
+                <ContractCard contract={contract} />
+              </div>
             ))}
           </div>
         )}

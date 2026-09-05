@@ -33,3 +33,4 @@ solana-program/target/
 *.pdf
 WhatsApp*.jpeg
 logo_principal.jpg
+.vercel

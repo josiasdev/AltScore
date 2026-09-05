@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.user import User, Score
-from app.schemas.score import ScoreResponse, ScoreBreakdown
+from app.schemas.score import ScoreResponse, ScoreBreakdown, ScoreSimulate
 from app.services.score_engine import score_engine
 from app.services.solana import register_score_on_chain
 from app.utils.crypto import get_current_user
@@ -77,4 +77,19 @@ def calculate_score(
         level=result["level"],
         connected_sources=result["connected_sources"],
         solana_tx=solana_result,
+    )
+
+
+@router.post("/simulate", response_model=ScoreResponse)
+def simulate_score(
+    data: ScoreSimulate,
+    current_user: User = Depends(get_current_user),
+):
+    result = score_engine.calculate(current_user.id, data.sources)
+
+    return ScoreResponse(
+        total=result["total"],
+        breakdown=ScoreBreakdown(**result["breakdown"]),
+        level=result["level"],
+        connected_sources=result["connected_sources"],
     )

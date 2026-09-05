@@ -6,17 +6,20 @@ import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Spinner } from '../components/ui/Spinner';
 import { ErrorBanner } from '../components/ui/ErrorBanner';
-import type { Property } from '../types';
+import { ScoreDisplay } from '../components/score/ScoreDisplay';
+import type { Property, Score } from '../types';
 
 export function PropertyDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
   const [property, setProperty] = useState<Property | null>(null);
+  const [score, setScore] = useState<Score | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [requesting, setRequesting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [checkingScore, setCheckingScore] = useState(false);
 
   const loadProperty = async () => {
     setLoading(true);
@@ -35,9 +38,36 @@ export function PropertyDetail() {
     loadProperty();
   }, [id]);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      api.score.get().then(setScore).catch(() => {});
+    }
+  }, [isAuthenticated]);
+
+  const handleCheckScore = async () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    setCheckingScore(true);
+    try {
+      const res = await api.score.get();
+      if (res) {
+        setScore(res);
+      } else {
+        const calculated = await api.score.calculate();
+        setScore(calculated);
+      }
+    } catch (err: any) {
+      setError(err.message || 'Erro ao verificar score');
+    } finally {
+      setCheckingScore(false);
+    }
+  };
+
   const handleRequestContract = async () => {
     if (!isAuthenticated) {
-      navigate('/auth');
+      navigate('/login');
       return;
     }
 
@@ -74,6 +104,9 @@ export function PropertyDetail() {
     );
   }
 
+  const isQualified = score && score.total >= 500;
+  const minScoreRequired = 500;
+
   return (
     <div className="min-h-screen bg-petrol-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
@@ -103,8 +136,11 @@ export function PropertyDetail() {
               <div>
                 <h1 className="text-2xl font-heading font-bold text-petrol">{property.title}</h1>
                 <p className="text-petrol-400">{property.address}</p>
+                <p className="text-sm text-petrol-300">{property.neighborhood}</p>
               </div>
-              {property.accepts_altscore && <Badge variant="success">Aceita AltScore</Badge>}
+              <div className="flex gap-2">
+                {property.accepts_altscore && <Badge variant="success">Alugue sem fiador</Badge>}
+              </div>
             </div>
 
             <div className="grid grid-cols-3 gap-4 mb-6 py-4 border-y border-petrol-100">
@@ -124,9 +160,47 @@ export function PropertyDetail() {
 
             <p className="text-petrol-400 mb-6">{property.description}</p>
 
-            <div className="flex items-center justify-between bg-petrol-50 rounded-lg p-4">
+            {/* Score Verification */}
+            {property.accepts_altscore && (
+              <div className="bg-petrol-50 rounded-xl p-6 mb-6">
+                <h3 className="font-heading font-semibold text-lg text-petrol mb-4">
+                  Verificar seu score para este imóvel
+                </h3>
+                {score ? (
+                  <div className="flex items-center gap-6">
+                    <ScoreDisplay score={score.total} level={score.level} />
+                    <div className="flex-1">
+                      <p className="text-petrol font-medium mb-2">
+                        {isQualified
+                          ? `✅ Você está qualificado! Score mínimo: ${minScoreRequired}`
+                          : `❌ Score mínimo necessário: ${minScoreRequired}`
+                        }
+                      </p>
+                      <p className="text-sm text-petrol-400">
+                        {isQualified
+                          ? 'Seu score atende ao requisito deste imóvel.'
+                          : 'Conecte mais fontes de dados para aumentar seu score.'
+                        }
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <p className="text-petrol-400 mb-4">
+                      Verifique seu score para saber se está qualificado
+                    </p>
+                    <Button onClick={handleCheckScore} disabled={checkingScore}>
+                      {checkingScore ? 'Verificando...' : 'Verificar meu score'}
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Price and CTA */}
+            <div className="flex items-center justify-between bg-petrol rounded-xl p-6">
               <div>
-                <p className="text-sm text-petrol-400">Aluguel</p>
+                <p className="text-petrol-200 text-sm">Aluguel mensal</p>
                 <p className="text-3xl font-heading font-bold text-mint">
                   R$ {property.rent_value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                 </p>
@@ -139,7 +213,10 @@ export function PropertyDetail() {
                   </Button>
                 </div>
               ) : (
-                <Button onClick={handleRequestContract} disabled={requesting}>
+                <Button
+                  onClick={handleRequestContract}
+                  disabled={requesting || (property.accepts_altscore && !isQualified)}
+                >
                   {requesting ? 'Enviando...' : 'Solicitar contrato'}
                 </Button>
               )}

@@ -17,7 +17,7 @@ export function ContractCard({ contract }: ContractCardProps) {
   const { label, variant } = config;
 
   return (
-    <div className="bg-white rounded-xl border border-petrol-100 p-4 shadow-sm">
+    <div className="bg-white rounded-xl border border-petrol-100 p-4 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <h3 className="font-heading font-semibold text-petrol">{contract.property_title}</h3>
         <Badge variant={variant}>{label}</Badge>
@@ -25,7 +25,7 @@ export function ContractCard({ contract }: ContractCardProps) {
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
           <span className="text-petrol-400">Valor do aluguel</span>
-          <span className="font-medium text-petrol">
+          <span className="font-medium text-mint">
             R$ {contract.rent_value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
           </span>
         </div>
@@ -41,6 +41,9 @@ export function ContractCard({ contract }: ContractCardProps) {
             </span>
           </div>
         )}
+      </div>
+      <div className="mt-3 pt-3 border-t border-petrol-100 text-right">
+        <span className="text-mint text-sm font-medium">Ver detalhes →</span>
       </div>
     </div>
   );

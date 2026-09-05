@@ -2,6 +2,7 @@ export interface User {
   id: number;
   email: string;
   full_name: string;
+  cpf?: string;
   role: 'tenant' | 'landlord';
   solana_public_key?: string;
   created_at: string;

@@ -14,3 +14,7 @@ class ScoreResponse(BaseModel):
     level: str
     connected_sources: list[str]
     solana_tx: dict | None = None
+
+
+class ScoreSimulate(BaseModel):
+    sources: list[str]

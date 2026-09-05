@@ -56,7 +56,7 @@ export function Header() {
               </>
             ) : (
               <Link
-                to="/auth"
+                to="/login"
                 className="bg-mint text-petrol px-4 py-2 rounded-lg font-medium hover:bg-mint-500 transition-colors"
               >
                 Entrar

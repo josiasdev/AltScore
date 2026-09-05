@@ -10,6 +10,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     full_name = Column(String)
+    cpf = Column(String, nullable=True, unique=True)
     role = Column(String, default="tenant")
     solana_public_key = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

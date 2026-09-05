@@ -26,15 +26,21 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
 
 export const api = {
   auth: {
-    register: (data: { email: string; password: string; full_name: string; role: string }) =>
+    register: (data: { email: string; password: string; full_name: string; cpf: string; role: string }) =>
       request<{ access_token: string; user: any }>('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
     login: (data: { email: string; password: string }) =>
       request<{ access_token: string; user: any }>('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
+    loginWithWallet: (public_key: string) =>
+      request<{ access_token: string; user: any }>('/auth/login-wallet', { method: 'POST', body: JSON.stringify({ public_key }) }),
+    registerWithWallet: (data: { public_key: string; role: string }) =>
+      request<{ access_token: string; user: any }>('/auth/register-wallet', { method: 'POST', body: JSON.stringify(data) }),
     me: () => request<any>('/auth/me'),
   },
   score: {
     get: () => request<any>('/score'),
     calculate: () => request<any>('/score/calculate', { method: 'POST' }),
+    simulate: (sources: string[]) =>
+      request<any>('/score/simulate', { method: 'POST', body: JSON.stringify({ sources }) }),
   },
   properties: {
     list: () => request<any[]>('/properties'),
