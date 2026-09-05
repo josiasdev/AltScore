@@ -15,7 +15,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="AltScore" className="h-8 w-8 rounded-lg object-cover" />
+            <img src="/logo.jpg" alt="AltScore" className="h-12 w-12 rounded-lg object-cover" />
             <span className="font-heading font-bold text-xl">AltScore</span>
           </Link>
 

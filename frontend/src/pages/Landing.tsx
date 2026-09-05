@@ -7,7 +7,7 @@ export function Landing() {
       {/* Hero */}
       <section className="bg-petrol text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <img src="/logo.jpg" alt="AltScore" className="h-16 w-16 rounded-xl mx-auto mb-6 object-cover" />
+          <img src="/logo.jpg" alt="AltScore" className="h-32 w-32 rounded-2xl mx-auto mb-8 object-cover" />
           <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
             Alugue sem fiador.
             <br />

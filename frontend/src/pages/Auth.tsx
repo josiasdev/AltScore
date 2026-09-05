@@ -41,7 +41,7 @@ export function Auth() {
     <div className="min-h-screen bg-petrol-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <img src="/logo.jpg" alt="AltScore" className="h-12 w-12 rounded-xl mx-auto mb-4 object-cover" />
+          <img src="/logo.jpg" alt="AltScore" className="h-20 w-20 rounded-2xl mx-auto mb-4 object-cover" />
           <h1 className="text-2xl font-heading font-bold text-petrol">
             {isLogin ? 'Entrar na sua conta' : 'Criar conta'}
           </h1>
