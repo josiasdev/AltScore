@@ -9,13 +9,13 @@ export function Landing() {
         <div className="max-w-4xl mx-auto text-center">
           <img src="/logo.jpg" alt="AltScore" className="h-20 w-auto max-w-[320px] rounded-xl mx-auto mb-8 object-contain bg-white px-4 py-2" />
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-            Alugue sem fiador.
+            Score de crédito para
             <br />
-            <span className="text-mint">Seu histórico é sua garantia.</span>
+            <span className="text-mint">plataformas de aluguel.</span>
           </h1>
           <p className="text-petrol-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-            O AltScore usa dados reais de pagamento para construir um score de crédito alternativo.
-            Sem fiador, sem complicação.
+            O AltScore é a solução que conecta inquilinos a imóveis.
+            Seu score alternativo é aceito em plataformas como QuintoAndar, Zap Imóveis e mais.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/cadastro">
@@ -23,9 +23,23 @@ export function Landing() {
             </Link>
             <Link to="/imoveis">
               <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-petrol">
-                Ver imóveis
+                Ver imóveis parceiros
               </Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Logos */}
+      <section className="py-8 px-4 bg-white border-b border-petrol-100">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-center text-petrol-300 text-sm mb-6">Plataformas que aceitam AltScore</p>
+          <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap opacity-50">
+            <span className="text-xl md:text-2xl font-heading font-bold text-petrol-300">QuintoAndar</span>
+            <span className="text-xl md:text-2xl font-heading font-bold text-petrol-300">Zap Imóveis</span>
+            <span className="text-xl md:text-2xl font-heading font-bold text-petrol-300">VivaReal</span>
+            <span className="text-xl md:text-2xl font-heading font-bold text-petrol-300">ImovelWeb</span>
+            <span className="text-xl md:text-2xl font-heading font-bold text-petrol-300">OLX</span>
           </div>
         </div>
       </section>
@@ -81,7 +95,7 @@ export function Landing() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-sh-shrink-0">
                     <span className="text-red-500 font-bold">✗</span>
                   </div>
                   <div>
@@ -116,8 +130,8 @@ export function Landing() {
                     <span className="text-petrol font-bold">✓</span>
                   </div>
                   <div>
-                    <p className="font-medium">Aluguel sem fiador</p>
-                    <p className="text-sm text-petrol-200">Seu score é sua garantia</p>
+                    <p className="font-medium">Aceito em múltiplas plataformas</p>
+                    <p className="text-sm text-petrol-200">QuintoAndar, Zap, VivaReal e mais</p>
                   </div>
                 </div>
               </div>
@@ -135,7 +149,7 @@ export function Landing() {
             {[
               { step: '1', title: 'Crie sua conta', desc: 'Cadastre-se gratuitamente com email ou conecte sua wallet Phantom', icon: '👤' },
               { step: '2', title: 'Conecte seus dados', desc: 'Vincule Pix, assinaturas e open finance para gerar seu score', icon: '🔗' },
-              { step: '3', title: 'Alugue sem fiador', desc: 'Use seu AltScore como garantia e solicite contratos diretamente', icon: '🏠' },
+              { step: '3', title: 'Alugue sem fiador', desc: 'Use seu AltScore como garantia em qualquer plataforma parceira', icon: '🏠' },
             ].map((item) => (
               <div key={item.step} className="bg-white p-8 rounded-2xl text-center shadow-sm">
                 <div className="text-4xl mb-4">{item.icon}</div>
@@ -150,8 +164,36 @@ export function Landing() {
         </div>
       </section>
 
-      {/* Solana */}
+      {/* For Platforms */}
       <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-heading font-bold mb-6 text-petrol">Para plataformas de aluguel</h2>
+          <p className="text-petrol-400 text-lg mb-8">
+            Integre o AltScore e amplie seu número de inquilinos qualificados.
+            Reduza a inadimplência e aumente a confiança nas transações.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-6">
+            <div className="p-6 bg-petrol-50 rounded-xl">
+              <div className="text-3xl mb-3">📈</div>
+              <h3 className="font-heading font-semibold mb-2 text-petrol">Mais inquilinos</h3>
+              <p className="text-sm text-petrol-400">Acesse um público que hoje é excluído pelo sistema tradicional</p>
+            </div>
+            <div className="p-6 bg-petrol-50 rounded-xl">
+              <div className="text-3xl mb-3">🛡️</div>
+              <h3 className="font-heading font-semibold mb-2 text-petrol">Menos risco</h3>
+              <p className="text-sm text-petrol-400">Score baseado em dados reais de pagamento, não em renda formal</p>
+            </div>
+            <div className="p-6 bg-petrol-50 rounded-xl">
+              <div className="text-3xl mb-3">⚡</div>
+              <h3 className="font-heading font-semibold mb-2 text-petrol">Integração rápida</h3>
+              <p className="text-sm text-petrol-400">API simples para verificar o score do inquilino em segundos</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Solana */}
+      <section className="py-16 px-4 bg-petrol-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-heading font-bold mb-6 text-petrol">Seu Score seguro</h2>
           <p className="text-petrol-400 text-lg mb-8">
@@ -159,20 +201,20 @@ export function Landing() {
             garantindo transparência, imutabilidade e portabilidade dos seus dados.
           </p>
           <div className="grid sm:grid-cols-3 gap-6">
-            <div className="p-6 bg-petrol-50 rounded-xl">
+            <div className="p-6 bg-white rounded-xl">
               <div className="text-3xl mb-3">🔒</div>
               <h3 className="font-heading font-semibold mb-2 text-petrol">Imutável</h3>
               <p className="text-sm text-petrol-400">Seu histórico não pode ser alterado ou adulterado</p>
             </div>
-            <div className="p-6 bg-petrol-50 rounded-xl">
+            <div className="p-6 bg-white rounded-xl">
               <div className="text-3xl mb-3">👁️</div>
               <h3 className="font-heading font-semibold mb-2 text-petrol">Transparente</h3>
               <p className="text-sm text-petrol-400">Qualquer pessoa pode verificar seu score na chain</p>
             </div>
-            <div className="p-6 bg-petrol-50 rounded-xl">
+            <div className="p-6 bg-white rounded-xl">
               <div className="text-3xl mb-3">📦</div>
               <h3 className="font-heading font-semibold mb-2 text-petrol">Portável</h3>
-              <p className="text-sm text-petrol-400">Leve seu score para qualquer imobiliária do Brasil</p>
+              <p className="text-sm text-petrol-400">Leve seu score para qualquer plataforma parceira</p>
             </div>
           </div>
         </div>
@@ -193,7 +235,7 @@ export function Landing() {
             </Link>
             <Link to="/imoveis">
               <Button variant="outline" size="lg" className="border-petrol text-petrol hover:bg-petrol hover:text-white">
-                Ver imóveis disponíveis
+                Ver imóveis parceiros
               </Button>
             </Link>
           </div>

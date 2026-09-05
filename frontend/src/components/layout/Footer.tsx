@@ -8,8 +8,15 @@ export function Footer() {
             <span className="font-heading font-bold">AltScore</span>
           </div>
           <p className="text-petrol-200 text-sm">
-            Alugue sem fiador. Seu histórico é sua garantia.
+            Score de crédito alternativo para plataformas de aluguel. Alugue sem fiador.
           </p>
+          <div className="flex items-center gap-4 text-petrol-300 text-sm">
+            <span>QuintoAndar</span>
+            <span>•</span>
+            <span>Zap Imóveis</span>
+            <span>•</span>
+            <span>VivaReal</span>
+          </div>
         </div>
       </div>
     </footer>

@@ -64,8 +64,14 @@ export function Properties() {
     <div className="min-h-screen bg-petrol-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-heading font-bold text-petrol mb-2">Imóveis em Quixadá</h1>
-          <p className="text-petrol-400">Encontre o imóvel perfeito para você</p>
+          <h1 className="text-3xl font-heading font-bold text-petrol mb-2">Imóveis parceiros</h1>
+          <p className="text-petrol-400">Imóveis de plataformas que aceitam AltScore</p>
+          <div className="flex items-center gap-4 mt-4">
+            <span className="text-sm text-petrol-300">Parceiros:</span>
+            <span className="text-sm font-medium text-petrol-400">QuintoAndar</span>
+            <span className="text-sm font-medium text-petrol-400">Zap Imóveis</span>
+            <span className="text-sm font-medium text-petrol-400">VivaReal</span>
+          </div>
         </div>
 
         {error && <ErrorBanner message={error} onRetry={loadProperties} />}
