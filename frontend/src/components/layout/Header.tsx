@@ -32,6 +32,7 @@ export function Header() {
 
           <nav className="hidden md:flex items-center gap-6">
             <Link to="/imoveis" className="hover:text-mint transition-colors">Imóveis</Link>
+            <Link to="/fundo" className="hover:text-mint transition-colors">Fundo Garantidor</Link>
             {isAuthenticated && (
               <>
                 {isLandlord ? (
@@ -90,6 +91,12 @@ export function Header() {
               className="block w-full text-left px-3 py-2 rounded-lg hover:bg-petrol-700 transition-colors"
             >
               Imóveis
+            </button>
+            <button
+              onClick={() => handleNav('/fundo')}
+              className="block w-full text-left px-3 py-2 rounded-lg hover:bg-petrol-700 transition-colors"
+            >
+              Fundo Garantidor
             </button>
             {isAuthenticated && user && (
               <>

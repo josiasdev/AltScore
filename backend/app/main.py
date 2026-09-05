@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import engine, Base
 from app.routes import auth_router, score_router, properties_router, contracts_router, landlord_router
+from app.routes.guarantee_fund import router as fund_router
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -22,6 +23,7 @@ app.include_router(score_router)
 app.include_router(properties_router)
 app.include_router(contracts_router)
 app.include_router(landlord_router)
+app.include_router(fund_router)
 
 
 @app.get("/api/health")

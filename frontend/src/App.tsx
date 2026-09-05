@@ -12,6 +12,7 @@ import { PropertyDetail } from './pages/PropertyDetail';
 import { Contracts } from './pages/Contracts';
 import { ContractDetail } from './pages/ContractDetail';
 import { LandlordDashboard } from './pages/LandlordDashboard';
+import { GuaranteeFund } from './pages/GuaranteeFund';
 import { useAuthStore } from './stores/authStore';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/imoveis/:id" element={<PropertyDetail />} />
             <Route path="/contratos" element={<Contracts />} />
             <Route path="/contratos/:id" element={<ContractDetail />} />
+            <Route path="/fundo" element={<GuaranteeFund />} />
           </Routes>
         </main>
         <Footer />
