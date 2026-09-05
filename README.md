@@ -47,7 +47,7 @@ O AltScore coleta dados reais de pagamento (Pix, assinaturas, open finance) e ge
   - **Pagamento** (40%): Histórico via Pix
   - **Renda** (25%): Estabilidade via open finance
   - **Financeiro** (20%): Comportamento financeiro
-  - **Social** (15%): Dados alternativos
+  - **Social** (15%): Referências, estabilidade, comunidade, presença digital
 - Simulador: "Conecte mais fontes para aumentar seu score"
 - Badges de conquista na blockchain
 - Verificação de qualificação para imóveis

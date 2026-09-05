@@ -59,7 +59,29 @@ class ScoreEngine:
         return 50
 
     def _social_score(self, sources: list[str]) -> int:
-        return 110
+        """
+        Score social (0-150) baseado em:
+        - Referências de proprietários anteriores (0-50)
+        - Tempo de residência estável (0-30)
+        - Avaliações de vizinhos/comunidade (0-40)
+        - Presença em redes sociais verificáveis (0-30)
+        """
+        base_score = 60  # Score mínimo para todos os usuários
+
+        # Referências de proprietários anteriores
+        references_score = 30  # Simulado: proprietário de confiança
+
+        # Estabilidade de residência
+        stability_score = 20  # Simulado: tempo residindo
+
+        # Avaliações da comunidade
+        community_score = 25  # Simulado: avaliações positivas
+
+        # Presença digital verificável
+        digital_presence_score = 15  # Simulado: redes sociais
+
+        total = base_score + references_score + stability_score + community_score + digital_presence_score
+        return min(total, 150)  # Limitado a 150
 
     def _get_level(self, score: int) -> str:
         if score >= 800:

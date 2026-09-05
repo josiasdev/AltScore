@@ -122,6 +122,25 @@ O score é calculado com base em 4 fatores:
 | Dados Financeiros | 20% | 0-200 | Open Finance |
 | Avaliação Social | 15% | 0-150 | Dados alternativos |
 
+### Avaliação Social (0-150 pontos)
+
+O score social é composto por 4 sub-fatores:
+
+| Sub-fator | Pontuação | Descrição |
+|-----------|-----------|-----------|
+| **Referências** | 0-50 | Avaliações de proprietários anteriores |
+| **Estabilidade** | 0-30 | Tempo de residência em locais anteriores |
+| **Comunidade** | 0-40 | Avaliações de vizinhos e comunidade |
+| **Presença Digital** | 0-30 | Redes sociais verificáveis |
+
+**Como funciona na prática:**
+1. **Referências**: Proprietários anteriores avaliam o inquilino (pagamento pontual, cuidado com o imóvel, convivência)
+2. **Estabilidade**: Tempo médio de residência em cada imóvel (quanto maior, melhor)
+3. **Comunidade**: Avaliações de vizinhos sobre convivência, barulio, limpeza
+4. **Presença Digital**: Verificação de perfis reais em redes sociais (LinkedIn, Instagram)
+
+> **Nota**: No MVP atual, esses valores são simulados. Em produção, seriam integrados com APIs de verificação e sistemas de avaliação.
+
 ### Níveis
 
 | Score | Nível |
