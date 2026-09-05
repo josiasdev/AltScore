@@ -4,6 +4,7 @@ import { api } from '../lib/api';
 import { useAuthStore } from '../stores/authStore';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
+import { Avatar } from '../components/ui/Avatar';
 
 export function LandlordDashboard() {
   const { user, isAuthenticated } = useAuthStore();
@@ -73,10 +74,15 @@ export function LandlordDashboard() {
     <div className="min-h-screen bg-petrol-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-heading font-bold text-petrol">
-            Painel do Proprietário
-          </h1>
-          <p className="text-petrol-400">Gerencie seus imóveis e contratos</p>
+          <div className="flex items-center gap-4">
+            <Avatar name={user?.full_name || 'Proprietário'} role="landlord" size="lg" />
+            <div>
+              <h1 className="text-3xl font-heading font-bold text-petrol">
+                Painel do Proprietário
+              </h1>
+              <p className="text-petrol-400">Gerencie seus imóveis e contratos</p>
+            </div>
+          </div>
         </div>
 
         {/* Stats */}

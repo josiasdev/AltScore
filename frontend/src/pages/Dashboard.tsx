@@ -5,6 +5,7 @@ import { useAuthStore } from '../stores/authStore';
 import { ScoreDisplay } from '../components/score/ScoreDisplay';
 import { PropertyCard } from '../components/property/PropertyCard';
 import { Card } from '../components/ui/Card';
+import { Avatar } from '../components/ui/Avatar';
 import type { Property, Score } from '../types';
 
 export function Dashboard() {
@@ -50,10 +51,15 @@ export function Dashboard() {
     <div className="min-h-screen bg-petrol-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-heading font-bold text-petrol">
-            Olá, {user?.full_name || 'Usuário'}
-          </h1>
-          <p className="text-petrol-400">Bem-vindo ao seu painel AltScore</p>
+          <div className="flex items-center gap-4">
+            <Avatar name={user?.full_name || 'Usuário'} role={user?.role} size="lg" />
+            <div>
+              <h1 className="text-3xl font-heading font-bold text-petrol">
+                Olá, {user?.full_name?.split(' ')[0] || 'Usuário'}
+              </h1>
+              <p className="text-petrol-400">Bem-vindo ao seu painel AltScore</p>
+            </div>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6 mb-8">

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
+import { Avatar } from '../ui/Avatar';
 
 export function Header() {
   const { isAuthenticated, user, logout } = useAuthStore();
@@ -36,10 +37,15 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-4">
-            {isAuthenticated ? (
-              <button onClick={handleLogout} className="text-sm hover:text-mint transition-colors">
-                Sair
-              </button>
+            {isAuthenticated && user ? (
+              <>
+                <Link to={isLandlord ? '/proprietario' : '/dashboard'} className="hidden sm:block">
+                  <Avatar name={user.full_name} role={user.role} size="sm" />
+                </Link>
+                <button onClick={handleLogout} className="text-sm hover:text-mint transition-colors">
+                  Sair
+                </button>
+              </>
             ) : (
               <Link
                 to="/auth"

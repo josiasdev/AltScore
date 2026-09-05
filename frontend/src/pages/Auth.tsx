@@ -4,6 +4,7 @@ import { api } from '../lib/api';
 import { useAuthStore } from '../stores/authStore';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
+import { Avatar } from '../components/ui/Avatar';
 
 export function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -80,14 +81,28 @@ export function Auth() {
                 />
                 <div>
                   <label className="block text-sm font-medium text-petrol mb-1">Tipo de conta</label>
-                  <select
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-petrol-200 focus:outline-none focus:ring-2 focus:ring-mint text-petrol"
-                  >
-                    <option value="tenant">Locatário (quero alugar)</option>
-                    <option value="landlord">Proprietário (tenho imóvel)</option>
-                  </select>
+                  <div className="flex gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setRole('tenant')}
+                      className={`flex-1 flex items-center gap-3 p-3 rounded-lg border-2 transition-colors ${
+                        role === 'tenant' ? 'border-mint bg-mint-50' : 'border-petrol-200 hover:border-petrol-300'
+                      }`}
+                    >
+                      <Avatar name={fullName || 'U'} role="tenant" size="sm" />
+                      <span className="text-sm font-medium text-petrol">Locatário</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setRole('landlord')}
+                      className={`flex-1 flex items-center gap-3 p-3 rounded-lg border-2 transition-colors ${
+                        role === 'landlord' ? 'border-mint bg-mint-50' : 'border-petrol-200 hover:border-petrol-300'
+                      }`}
+                    >
+                      <Avatar name={fullName || 'U'} role="landlord" size="sm" />
+                      <span className="text-sm font-medium text-petrol">Proprietário</span>
+                    </button>
+                  </div>
                 </div>
               </>
             )}
