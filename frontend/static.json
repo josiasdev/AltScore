@@ -1,0 +1,4 @@
+web:
+  build: npm install && npm run build
+  output_directory: dist
+  install_command: cd frontend && npm install
