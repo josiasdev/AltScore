@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User, Property, Contract
 from app.schemas.contract import ContractCreate, ContractResponse
+from app.services.solana import create_contract_on_chain
 from app.utils.crypto import get_current_user
 
 router = APIRouter(prefix="/api/contracts", tags=["contracts"])
@@ -64,6 +65,16 @@ def create_contract(
     db.commit()
     db.refresh(contract)
 
+    solana_result = None
+    try:
+        solana_result = create_contract_on_chain(
+            contract_id=contract.id,
+            rent_value=int(property.rent_value),
+            landlord_pubkey=property.landlord_name,
+        )
+    except Exception as e:
+        print(f"[Solana] Contract registration failed: {e}")
+
     return ContractResponse(
         id=contract.id,
         property_id=contract.property_id,
@@ -74,4 +85,5 @@ def create_contract(
         status=contract.status,
         start_date=contract.start_date,
         solana_tx_hash=contract.solana_tx_hash,
+        solana=solana_result,
     )

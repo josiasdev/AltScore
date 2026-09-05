@@ -13,3 +13,4 @@ class ScoreResponse(BaseModel):
     breakdown: ScoreBreakdown
     level: str
     connected_sources: list[str]
+    solana_tx: dict | None = None

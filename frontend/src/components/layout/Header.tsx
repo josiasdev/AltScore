@@ -2,13 +2,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 
 export function Header() {
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, user, logout } = useAuthStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
+
+  const isLandlord = user?.role === 'landlord';
 
   return (
     <header className="bg-petrol text-white sticky top-0 z-50">
@@ -23,7 +25,11 @@ export function Header() {
             <Link to="/imoveis" className="hover:text-mint transition-colors">Imóveis</Link>
             {isAuthenticated && (
               <>
-                <Link to="/dashboard" className="hover:text-mint transition-colors">Dashboard</Link>
+                {isLandlord ? (
+                  <Link to="/proprietario" className="hover:text-mint transition-colors">Meus Imóveis</Link>
+                ) : (
+                  <Link to="/dashboard" className="hover:text-mint transition-colors">Dashboard</Link>
+                )}
                 <Link to="/contratos" className="hover:text-mint transition-colors">Contratos</Link>
               </>
             )}

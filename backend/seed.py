@@ -70,7 +70,7 @@ properties = [
         description="Casa em condomínio fechado, próximo ao campus da UFC. Churrasqueira e área de lazer.",
         accepts_altscore=True,
         image_url="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-        landlord_name="João Santos",
+        landlord_name="Maria Oliveira",
     ),
     Property(
         title="Studio mobiliado - Centro",
@@ -83,7 +83,7 @@ properties = [
         description="Studio mobiliado completo, ideal para solteiros. Próximo ao comércio e transporte público.",
         accepts_altscore=True,
         image_url="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
-        landlord_name="Ana Costa",
+        landlord_name="Maria Oliveira",
     ),
     Property(
         title="Apartamento 3 quartos - Padre José Maria",
@@ -96,7 +96,7 @@ properties = [
         description="Apartamento familiar, condomínio com piscina e academia. Perto de escolas e hospitais.",
         accepts_altscore=False,
         image_url="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
-        landlord_name="Carlos Ferreira",
+        landlord_name="Maria Oliveira",
     ),
     Property(
         title="Quarto em república - Estudantes",
@@ -109,7 +109,7 @@ properties = [
         description="Quarto em república estudantil. Cozinha compartilhada. Perfeito para estudantes de faculdade.",
         accepts_altscore=True,
         image_url="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800",
-        landlord_name="República Sol Nascente",
+        landlord_name="Maria Oliveira",
     ),
     Property(
         title="Cobertura 2 quartos - Alto da Boa Vista",
@@ -122,7 +122,7 @@ properties = [
         description="Cobertura com vista panorâmica da cidade. Varanda gourmet e 2 vagas de garagem.",
         accepts_altscore=True,
         image_url="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
-        landlord_name="Imobiliária Serra da Ibiapaba",
+        landlord_name="Maria Oliveira",
     ),
 ]
 

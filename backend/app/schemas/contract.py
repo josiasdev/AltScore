@@ -16,6 +16,7 @@ class ContractResponse(BaseModel):
     status: str
     start_date: datetime
     solana_tx_hash: str | None = None
+    solana: dict | None = None
 
     class Config:
         from_attributes = True

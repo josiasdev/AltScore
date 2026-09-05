@@ -8,6 +8,7 @@ import { ScorePage } from './pages/Score';
 import { Properties } from './pages/Properties';
 import { PropertyDetail } from './pages/PropertyDetail';
 import { Contracts } from './pages/Contracts';
+import { LandlordDashboard } from './pages/LandlordDashboard';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/proprietario" element={<LandlordDashboard />} />
             <Route path="/score" element={<ScorePage />} />
             <Route path="/imoveis" element={<Properties />} />
             <Route path="/imoveis/:id" element={<PropertyDetail />} />

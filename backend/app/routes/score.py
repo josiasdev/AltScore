@@ -5,6 +5,7 @@ from app.database import get_db
 from app.models.user import User, Score
 from app.schemas.score import ScoreResponse, ScoreBreakdown
 from app.services.score_engine import score_engine
+from app.services.solana import register_score_on_chain
 from app.utils.crypto import get_current_user
 
 router = APIRouter(prefix="/api/score", tags=["score"])
@@ -64,9 +65,16 @@ def calculate_score(
 
     db.commit()
 
+    solana_result = None
+    try:
+        solana_result = register_score_on_chain(result["total"], result["level"])
+    except Exception as e:
+        print(f"[Solana] Score registration failed: {e}")
+
     return ScoreResponse(
         total=result["total"],
         breakdown=ScoreBreakdown(**result["breakdown"]),
         level=result["level"],
         connected_sources=result["connected_sources"],
+        solana_tx=solana_result,
     )

@@ -45,4 +45,12 @@ export const api = {
     create: (data: { property_id: number }) =>
       request<any>('/contracts', { method: 'POST', body: JSON.stringify(data) }),
   },
+  landlord: {
+    properties: () => request<any[]>('/landlord/properties'),
+    contracts: () => request<any[]>('/landlord/contracts'),
+    acceptContract: (id: number) =>
+      request<any>(`/landlord/contracts/${id}/accept`, { method: 'PATCH' }),
+    rejectContract: (id: number) =>
+      request<any>(`/landlord/contracts/${id}/reject`, { method: 'PATCH' }),
+  },
 };
