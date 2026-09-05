@@ -1,0 +1,16 @@
+__pycache__
+*.pyc
+*.pyo
+.git
+.gitignore
+.env
+.env.example
+venv/
+.venv/
+*.db
+*.sqlite3
+altscore.db
+solana-keypair.json
+fly.toml
+Dockerfile
+.dockerignore
