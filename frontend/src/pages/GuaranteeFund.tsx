@@ -72,7 +72,8 @@ export function GuaranteeFund() {
     }
   };
 
-  const formatLamports = (lamports: number) => {
+  const formatLamports = (lamports: number | undefined | null) => {
+    if (lamports == null || isNaN(lamports)) return '0,00 SOL';
     const sol = lamports / 1_000_000_000;
     return `${sol.toFixed(2)} SOL`;
   };
